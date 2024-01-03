@@ -1,0 +1,40 @@
+.browser-bar{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+.browser-button {
+    color: DarkViolet;
+    display: block;
+    background-color: DarkSalmon;
+    border-radius: 10px;
+    width: 30px;
+}
+.browser-name {
+    color: #000;
+    background-color: white;
+    font-size: 12px;
+}
+.browser-name-active {
+    color: white;
+    background-color: navy;
+    font-size: 12px;
+}
+.browser-current {
+    color: white;
+}
+.textEditor-button {
+    color: DarkViolet;
+    display: block;
+    background-color: DarkSalmon;
+    border-radius: 10px;
+    width: 30px;
+  }
+.mat-icon-rtl-mirror{
+    width: 15px;
+    height: 15px;
+    font-size: 15px;
+}
+.mat-tree-node {
+    min-height: 30px;
+}

@@ -1,0 +1,23 @@
+.browser-bar{
+    display: flex;
+    flex-direction: row;
+}
+.browser-button {
+    color: DarkViolet;
+    display: block;
+    background-color: DarkSalmon;
+    border-radius: 10px;
+    width: 30px;
+}
+.browser-name {
+    color: #000;
+    background-color: white;
+}
+.browser-name-active {
+    color: white;
+    background-color: navy;
+}
+.browser-current {
+    color: white;
+}
+

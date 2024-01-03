@@ -1,0 +1,34 @@
+
+.watcherContainer{
+  background-color: yellowgreen;
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  /* width: 200px; */
+  border-style: solid;
+  border-color: black;
+  padding: 10%;
+}
+
+.watcherContent{
+  /* position:relative; */
+  /* left: 380px;
+  top: 140px; */
+  width: fit-content;
+}
+
+.watcher-attributes{
+  width: fit-content;
+  border: solid 1px #ccc;
+  border-radius: 5px;
+  background: #fff;
+  text-align: left;
+  padding: 10px;
+  margin: 0;
+}
+
+.watcher-attribute{
+  list-style-type: none;
+  border-bottom: solid 1px #8b8b8b;
+  padding: 8px 0;
+}
