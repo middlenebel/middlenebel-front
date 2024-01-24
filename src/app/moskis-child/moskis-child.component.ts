@@ -34,6 +34,7 @@ export class MoskisChildComponent  implements OnInit, OnDestroy {
     const componentRef = viewContainerRef.createComponent(item.component);
     componentRef.instance.data = item.data;
     componentRef.instance.core = this.core;
+    componentRef.instance.index = this.indexChild;
 
     if (this.indexChild < this.parentData.childs.length-1){
       const nextContainerRef = this.nextHost.viewContainerRef;

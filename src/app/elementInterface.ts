@@ -4,8 +4,8 @@ export interface ElementInterface {
     childs: ElementInterface[];
     script?: string;
     logContent?: string;
-    // attributes?: string[][];
-    // attributes?:Iterable<readonly [string, string]>;
     attributes?: any;
     folders?: any;
+    actions: string[];
+    portForwards?: string[];
   }

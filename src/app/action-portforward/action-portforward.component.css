@@ -1,0 +1,32 @@
+
+
+.actions{
+    list-style-type: none;
+    border-bottom: solid 1px #8b8b8b;
+    padding: 15px;
+}
+.title{
+    color: white;
+}
+.button {
+    padding: 10px;
+    border: solid 1px var(--primary-color);
+    background: var(--primary-color);
+    color: white;
+    border-radius: 8px;
+    /* transition-duration: 0.4s; */
+}
+.button:hover {
+    padding: 10px;
+    border: solid 1px var(--primary-color);
+    background: var(--secondary-color);
+    color: black;
+    border-radius: 8px;
+}
+.description{
+    min-width: max-content;
+    min-height: max-content;
+    background-color: whitesmoke;
+    margin: 15px;
+    padding: 10px;
+}

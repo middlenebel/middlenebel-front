@@ -1,0 +1,32 @@
+.waitingContainer{
+    background-color: cornflowerblue;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    border-style: solid;
+    border-color: black;
+    border-radius: 30px;
+    padding: 30px;
+}
+.waitingHeader{
+    background-color: cornflowerblue;
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+}
+.sample-content {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    /* margin-top: 30px; */
+}
+.waiting-description {
+    background-color: cornflowerblue;
+    border-radius: 30px;
+    margin-left: 15px;
+    width: 200px;
+}
+.waiting-message {
+    color: whitesmoke;
+    display: block;
+}

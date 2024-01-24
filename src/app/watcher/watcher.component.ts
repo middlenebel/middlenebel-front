@@ -1,8 +1,10 @@
-import { Component, Input, } from '@angular/core';
-import { ElementInterface } from '../elementInterface';
+import { Component, Input, ViewChild } from '@angular/core';
 import {OverlayModule} from '@angular/cdk/overlay';
-import { Util } from '../util';
 import {NgFor, NgForOf} from "@angular/common";
+
+import { ElementInterface } from '../elementInterface';
+import { ItemCoreComponent } from '../item-core/item-core.component';
+
 @Component({
   selector: 'app-watcher',
   template: `
@@ -15,6 +17,9 @@ import {NgFor, NgForOf} from "@angular/common";
         </div>
       </div>
   </div>
+  <div>
+          <ng-template actionsHost>UNLOADED SYSTEM</ng-template>
+        </div>
   `,
   standalone: true,
   imports: [OverlayModule, NgFor, NgForOf],
@@ -23,7 +28,10 @@ import {NgFor, NgForOf} from "@angular/common";
 export class WatcherComponent {
   @Input() watchItem?: ElementInterface;
   @Input() attributes?: any;
+  @Input() core? : ItemCoreComponent;
 
   ngOnInit(){
+    console.log("WATCH Item " + this.watchItem?.name);
+    console.log("WATCH Actions " + this.watchItem?.actions);
   }
 }

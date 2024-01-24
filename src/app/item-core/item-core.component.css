@@ -18,10 +18,13 @@
     background-color: blueviolet;
     border-radius: 30px;
     margin-left: 15px;
+    width: 60px;
 }
 .rightContainer{
   width: 640px;
   height: 400px;
+  padding-left: 15px;
+  padding-right: 10px;
 }
 .viewer {
   background-color: violet;
@@ -76,3 +79,16 @@
     width: 30px;
     filter: invert(0.5) sepia(1) saturate(5) hue-rotate(175deg);
   }
+  .listing-actions{
+    position: relative;
+    top: 40px;
+    left: -40px;
+    min-width: 200px;
+    color: yellow;
+    font-style: italic;
+}
+.waiting{
+  position:absolute;
+  left: 0px;
+  top: 0px;
+}

@@ -1,4 +1,4 @@
-import { Component, NgZone, Input, inject, ViewChild, ElementRef } from '@angular/core';
+import { Component, NgZone, Input, inject, ViewChild, ElementRef, enableProdMode } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 
 import { CoreService } from '../core.service';
@@ -8,9 +8,12 @@ import { ActionInterface } from '../actionInterface';
   selector: 'app-logger',
   template: `
     <div class="textEditor-bar">
-      <img src="assets/refresh-cw.svg" matTooltip="Reload" class="textEditor-button" (click)="onLoad()">
+      <img src="assets/refresh-cw.svg" matTooltip="Refresh log" class="textEditor-button" (click)="onLoad()">
+      <img src="assets/trash-alt.svg" matTooltip="Clear log" class="textEditor-button" (click)="onClear()">
     </div>
-    <textarea #textArea spellcheck="false" matInput class="textEditor" [formControl]="loggerControl" (focus)= "onEndfocus($event)"></textarea>
+    <textarea #textArea spellcheck="false" matInput class="textEditor" [formControl]="loggerControl" 
+    (focus)= "onEndfocus($event)">
+  </textarea>
   `,
   styleUrls: ['./logger.component.css']
 })
@@ -25,21 +28,36 @@ export class LoggerComponent {
   coreService: CoreService = inject(CoreService);
 
   ngOnInit(){
+    console.log("Logger.ngOnInit");
+    enableProdMode();
     this.onLoad();
   }
-  onLoad(){ //TODO gets from server
-    
+  onLoad(){
+    console.log("Logger.onLoad");
     this.coreService.doGetLog().then((response: ActionInterface) => {
-      console.log("LOGGER reloaded "+ response.result );
+      console.log("LOGGER reloaded "+ response.result ); //DEBUG +" "+response.message);
       this.logContent = response.message;
+      const textArea = this._textArea?.nativeElement as HTMLTextAreaElement;
+      textArea.value = this.logContent;
+      textArea?.focus();
     });
-    this.loggerControl.setValue( this.logContent );
-
-    const textArea = this._textArea?.nativeElement as HTMLTextAreaElement;
-    textArea.focus();
   }
+  onClear(){
+    console.log("Logger.clear");
+    this.coreService.doClearLog().then((response: ActionInterface) => {
+      console.log("LOGGER cleared "+ response.result ); //DEBUG +" "+response.message);
+      this.logContent = response.message;
+      const textArea = this._textArea?.nativeElement as HTMLTextAreaElement;
+      textArea.value = this.logContent;
+      textArea?.focus();
+    });
+  }
+
   public onEndfocus(args: any): void {
+    if ( args == undefined ){
+        return;
+    }
     //sets cursor position at end of MaskedTextBox
-    args.selectionStart=args.selectionEnd = args.maskedValue.length;
+    args.selectionStart=args.selectionEnd = args.maskedValue?.length;
   }
 }

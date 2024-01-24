@@ -6,8 +6,9 @@ import { ElementDirective } from '../element.directive';
 import { MoskisElementComponent } from '../moskis-element/moskis-element.component';
 import { Util } from '../util';
 
-//ng generate component home --standalone --inline-template --skip-tests
-//ng generate component item-kafka --inline-template --skip-tests
+//ng generate component test --standalone --inline-template --skip-tests
+//ng generate component item-mysql --inline-template --skip-tests
+//
 
 @Component({
   selector: 'app-home',

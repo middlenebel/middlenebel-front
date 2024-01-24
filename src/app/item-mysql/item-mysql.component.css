@@ -32,12 +32,12 @@
       border-radius: 10px 10px 10px 10px;
     }
 
-    .kafka-actions {
-      background-color: DarkSalmon;
-      border-radius: 10px;
+    .actions {
+        background-color: DarkSalmon;
+        border-radius: 10px;
     }
-    .kafka-action {
-      color: DarkViolet;
-      display: block;
-      white-space: pre-line !important;
+    .action {
+        color: DarkViolet;
+        display: block;
+        white-space: pre-line !important;
     }

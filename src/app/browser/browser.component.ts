@@ -1,16 +1,14 @@
 import { Component, Input, ViewChild, inject } from '@angular/core';
-import { QuestionDirective } from '../question.directive';
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {MatTreeFlatDataSource, MatTreeFlattener, MatTreeModule} from '@angular/material/tree';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
-import { SelectionModel } from '@angular/cdk/collections';
-import { QuestionComponent } from "../question/question.component";
 import { ItemCoreComponent } from '../item-core/item-core.component';
 import { BrowserActionInterface } from "../browserActionInterface";
 import { ActionInterface } from '../actionInterface';
 import { TreeNode } from '../treeNodeInterface';
 import { BrowserService } from '../browser.service';
+import { TestComponent } from '../test/test.component';
+import { QuestionComponent } from "../question/question.component";
+import { Util } from '../util';
 
 /** Flat node with expandable and level information */
 interface FlatNode {
@@ -26,11 +24,11 @@ interface FlatNode {
   template: `
     <div class="browser-bar">
       <img src="assets/refresh-cw.svg" matTooltip="Reload" class="textEditor-button" (click)="loadFolders()">
-      <img src="assets/folder-plus.svg" matTooltip="New folder" class="browser-button" (click)="onAddFolder()">
-      <img src="assets/file-plus.svg" matTooltip="New file" class="browser-button" (click)="onAddFile()">
-      <img src="assets/trash-alt.svg" matTooltip="Delete" class="browser-button" (click)="onDelete()">
-      <img src="assets/file-arrow-down-alt-svgrepo-com.svg" matTooltip="Load script" class="browser-button" (click)="onLoad()">
-      <h2 class="browser-current" matTooltip="Rename" (click)="onCurrent()">{{selectedNode?.name}}</h2>
+      <img src="assets/folder-plus.svg" matTooltip="New folder" class="browser-button" (click)="askNewFolder!.show()">
+      <img src="assets/file-plus.svg" matTooltip="New file" class="browser-button" (click)="askNewFile!.show()">
+      <img src="assets/trash-alt.svg" matTooltip="Delete" class="browser-button" (click)="askDelete!.show()">
+      <img src="assets/file-arrow-down-alt-svgrepo-com.svg" matTooltip="Load script" class="browser-button" (click)="askLoad!.show()">
+      <h2 class="browser-current" matTooltip="Rename" (click)="askRename!.show()">{{selectedNode?.name}}</h2>
     </div>
     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
   <!-- This is the tree node template for leaf nodes -->
@@ -50,6 +48,11 @@ interface FlatNode {
     <p [ngClass]="node.selected ? 'browser-name-active' : 'browser-name'" (click)="onSelect(node)">{{node.name}}</p>
   </mat-tree-node>
 </mat-tree>
+<app-question #askNewFolder [onDoIt]="doNewFolder" [hideInput]=false value="Name" message="Name of new folder in {{this.selectedNode?.base}}:"/>
+<app-question #askNewFile [onDoIt]="doNewFile" [hideInput]=false value="Name" message="Name of new file in {{this.selectedNode?.base}}:"/>
+<app-question #askDelete [onDoIt]="doDelete" [hideInput]=true message="Delete {{this.selectedNode?.name}}?"/>
+<app-question #askLoad [onDoIt]="doLoadScript" [hideInput]=true message="Load script?"/>
+<app-question #askRename [onDoIt]="doRename" [hideInput]=false message="Rename {{this.selectedNode?.name}}?" [value]="this.selectedNode?.name"/>
   `,
   styleUrls: ['./browser.component.css']
 })
@@ -61,6 +64,11 @@ export class BrowserComponent {
   action?: BrowserActionInterface;
 
   browserService: BrowserService = inject(BrowserService);
+
+  @ViewChild('askNewFile') askNewFile?: QuestionComponent;
+  @ViewChild('askDelete') askDelete?: QuestionComponent;
+  @ViewChild('askLoad') askLoad?: QuestionComponent;
+  @ViewChild('askRename') askRename?: QuestionComponent;
   
   private _transformer = (node: TreeNode, level: number) => {
     return {
@@ -97,13 +105,22 @@ export class BrowserComponent {
   
   ngOnInit(){
     this.loadFolders();
-    this.onSelect(this.dataSource.data[0]);
+    // this.onSelect(this.dataSource.data[0]);
   }
 
   loadFolders(){
     this.browserService.doReload().then((response: TreeNode[]) => {
       console.log("BROWSER RELOAD "+ response);
       this.dataSource.data = response;
+
+      if ( Util.BrowserSelectedNode != undefined ){
+        this.selectedNode = Util.BrowserSelectedNode;
+        this.selectedNode.selected = true;
+      }else{
+        this.onSelect(this.dataSource.data[0]);
+      }
+      
+    Util.BrowserSelectedNode = this.selectedNode;
     });
   }
   onAddFolder(){
@@ -113,79 +130,127 @@ export class BrowserComponent {
     }
     this.core?.showQuestion( this, "New folder name", "Name" );
   }
-  onAddFile(){
-    this.action = {
-      action: "addFile",
-      base: this.selectedNode?.base
-    }
-    this.core?.showQuestion( this, "New file name", "Name" );
+  doAction(actionToDo : BrowserActionInterface){
+      this.browserService.doAction( actionToDo ).then((response: ActionInterface) => {
+        this.alertResult(response);
+      });   
   }
+  doNewFolder= (newValue:any): void => { 
+    this.doAction( {
+      action: "addFolder",
+      base: this.selectedNode?.base,
+      newValue: newValue
+    } );
+  }
+
+  doNewFile= (newValue:any): void => { 
+    this.doAction( {
+      action: "addFile",
+      base: this.selectedNode?.base,
+      newValue: newValue
+    } );
+  }
+
   onSelect(node: any){
     if (this.selectedNode != undefined){
       this.selectedNode.selected = false;
     }
     node.selected = true;
     this.selectedNode = node;
-    console.log("BROWSER Select "+node.name+" "+node.base);
-    console.log("BROWSER Select2 "+node.children);
-    console.log("BROWSER Select3 "+node.expandable);
+    Util.BrowserSelectedNode = this.selectedNode;
+    // console.log("BROWSER Select "+node.name+" "+node.base);
+    // console.log("BROWSER Select2 "+node.children);
+    // console.log("BROWSER Select3 "+node.expandable);
   }
-  onDelete(){
+
+  doDelete= (newValue:any): void => { 
     if (this.selectedNode != undefined){
-      var isDeleteFolder = false;
-      console.log("TO DELETE1 "+(this.selectedNode.children != undefined));
-      console.log("TO DELETE2 "+ this.selectedNode.children );
-      if ((this.selectedNode.children != undefined) || this.selectedNode.expandable ){
-        isDeleteFolder = true;
-      }
-      this.action = {
+      console.log("Base1 "+this.selectedNode.base);
+      console.log("Name "+this.selectedNode.name);
+      this.doAction( {
         action: "delete",
         base: this.selectedNode?.base,
         value: this.selectedNode?.name,
-        isFolder: isDeleteFolder
-      };
-      var hideInput = true;
-      this.core?.showQuestion( this, "Delete " + this.selectedNode.name + "?", this.selectedNode.name, hideInput );
+        isFolder: this.isFolder()
+      } );
     }
   }
-  onCurrent(){  
+
+  isFolder():boolean{
+    var tmpIsFolder : boolean = false;
     if (this.selectedNode != undefined){
-      this.action = {
+      console.log("TO DELETE1 "+(this.selectedNode.children != undefined));
+      console.log("TO DELETE2 "+ this.selectedNode.children );
+      if ((this.selectedNode.children != undefined) || this.selectedNode.expandable ){
+        tmpIsFolder = true;
+      }
+    }
+    return tmpIsFolder!;
+  }
+
+  doRename = (newValue:any): void => { 
+    if (this.selectedNode != undefined){
+      console.log("Base1 "+this.selectedNode.base);
+      console.log("Name "+this.selectedNode.name);
+      if (this.isFolder()){
+        var base : string = this.selectedNode.base;
+        var pos = base.indexOf("/"+this.selectedNode.name);
+        this.selectedNode.base = base.substring(0,pos);
+        console.log("Base2 "+this.selectedNode.base);
+      }
+      
+      this.doAction( {
         action: "rename",
         base: this.selectedNode?.base,
         value: this.selectedNode?.name,
-        newValue: ""
-      };
-      this.core?.showQuestion( this, "Rename " + this.selectedNode.name, this.selectedNode.name );
+        newValue: newValue,
+        isFolder: this.isFolder()
+      } );
     }
   }
-  onLoad(){
+
+  doLoadScript= (args: any): void => {
     if (this.selectedNode != undefined){
       this.action = {
         action: "loadScript",
         base: this.selectedNode?.base,
         value: this.selectedNode?.name,
-        newValue: ""
+        newValue: this.askRename?.value
       };
-      this.core?.showQuestion( this, "Load " + this.selectedNode.name, this.selectedNode.name );
+      this.browserService.doAction( this.action! ).then((response: ActionInterface) => {
+        if (response.result=="KO"){
+          console.log("BROWSER ACION "+response.result);
+          console.log("BROWSER MESSAGE "+response.message);  
+          alert(response.message);
+        }else
+          this.core?.onReload();
+      });
     }
   }
 
-  questionDoit(newValue:any){
-    if (this.action != undefined){
-      this.action.newValue = newValue;
-    }
-    console.log("questionDoit! "+ this.action?.action + " " + this.action?.base + " " +this.action?.value + " > " + this.action?.newValue);
-
-    this.browserService.doAction( this.action! ).then((response: ActionInterface) => {
+  alertResult(response: ActionInterface){
+    if (response.result=="KO"){
       console.log("BROWSER ACION "+response.result);
-      console.log("BROWSER MESSAGE "+response.message);
-    });
-
-    if (this.action?.action=="loadScript"){
-      this.core?.onReload();
-    }else{
+      console.log("BROWSER MESSAGE "+response.message);  
+      alert(response.message);
+    }else
       this.loadFolders();
-    }
   }
+
+  // questionDoit(newValue:any){
+  //   if (this.action != undefined){
+  //     this.action.newValue = newValue;
+  //   }
+  //   console.log("questionDoit! "+ this.action?.action + " " + this.action?.base + " " +this.action?.value + " > " + this.action?.newValue);
+
+  //   this.browserService.doAction( this.action! ).then((response: ActionInterface) => {
+  //     console.log("BROWSER ACION "+response.result);
+  //     console.log("BROWSER MESSAGE "+response.message);
+  //     if (this.action?.action=="loadScript"){
+  //       this.core?.onReload();
+  //     }else{
+  //       this.loadFolders();
+  //     }
+  //   });
+  // }
 }

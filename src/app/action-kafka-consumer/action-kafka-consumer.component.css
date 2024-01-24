@@ -1,0 +1,32 @@
+
+
+.action{
+    list-style-type: none;
+    border-bottom: solid 1px #8b8b8b;
+    padding: 8px 0;
+}
+.button {
+    padding: 10px;
+    border: solid 1px var(--primary-color);
+    background: var(--primary-color);
+    color: white;
+    border-radius: 8px;
+    /* transition-duration: 0.4s; */
+}
+.button:hover {
+    padding: 10px;
+    border: solid 1px var(--primary-color);
+    background: var(--secondary-color);
+    color: black;
+    border-radius: 8px;
+}
+.textEditor{
+    color: black;
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    width: 500px;
+    height: 80%;
+    min-height: 200px;
+    padding: 5px 5px 5px 5px;
+  }

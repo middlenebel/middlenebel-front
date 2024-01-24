@@ -30,6 +30,7 @@
       width: 50px;
       object-fit: cover;
       border-radius: 10px 10px 10px 10px;
+      background-color: whitesmoke;
     }
 
     .kafka-actions {
