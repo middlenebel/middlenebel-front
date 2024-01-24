@@ -22,14 +22,21 @@ import { Util } from '../util';
               </mat-select>
             </mat-form-field>
 
-            Message: <input class="question-value" #inputMessage value="{{ this.message }}">
+            <p>Message:</p>
+            <input class="question-value" #inputMessage value="{{ this.message }}">
             <div *ngIf="selected=='Auto'">
-              Max (0 = Continously): <input class="question-value" #inputMax value="{{ this.max }}">
-              Interval (ms): <input class="question-value" #inputInt value="{{ this.interval }}">
+              <div><p class="inputLabel">Max (0 = Continously):</p>
+                <input class="question-value" #inputMax value="{{ this.max }}">
+              </div>
+              <div><p class="inputLabel">Interval (ms):</p>
+                <input class="question-value" #inputInt value="{{ this.interval }}">
+              </div>
             </div>
-            <button class="button" *ngIf="selected=='Manual'" (click)="onSend()">Send</button>
-            <button class="button" *ngIf="(selected=='Auto')&& !getRunning()" (click)="onRun()">Run</button>
-            <button class="button" *ngIf="getRunning()" (click)="onAbort()">Abort</button>
+            <div>
+              <button class="button" *ngIf="selected=='Manual'" (click)="onSend()">Send</button>
+              <button class="button" *ngIf="(selected=='Auto')&& !getRunning()" (click)="onRun()">Run</button>
+              <button class="button" *ngIf="getRunning()" (click)="onAbort()">Abort</button>
+            </div>
           </div>
         </div>
   `,

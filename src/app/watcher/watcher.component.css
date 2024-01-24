@@ -1,22 +1,28 @@
 
+mat-table {
+  width: 100%;
+  background-color: whitesmoke;
+}
+
+
 .watcherContainer{
-  background-color: yellowgreen;
+  color: black;
+  /* background-color: burlywood; */
   display: flex;
   flex-direction: row;
   width: fit-content;
+  min-width: 400px;
   /* width: 200px; */
-  border-style: solid;
-  border-color: black;
-  padding: 10%;
+  /* border-style: solid;
+  border-color: black; */
+  padding: 20px;
 }
 
 .watcherContent{
-  /* position:relative; */
-  /* left: 380px;
-  top: 140px; */
   width: fit-content;
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
+  height: fit-content;
 }
 
 .watcher-attributes{
