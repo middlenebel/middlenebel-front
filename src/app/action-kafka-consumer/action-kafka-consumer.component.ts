@@ -14,7 +14,7 @@ import { CoreService } from '../core.service';
 @Component({
   selector: 'app-action-kafka-consumer',
   template: `
-<div class="actions">
+        <div class="actions">
           <div> <h2>Consumer</h2>
             Topic: <input class="question-value" #inputTopicConsumer value="{{ getTopic() }}">
             Messages: 

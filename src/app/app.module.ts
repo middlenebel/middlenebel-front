@@ -16,13 +16,12 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
 
 import { ReactiveFormsModule } from '@angular/forms';
-// import { NgCircleProgressModule } from 'ng-circle-progress';
-import { IgxProgressBarModule } from 'igniteui-angular';
 
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ViewerComponent } from './viewer/viewer.component';
+import { MatTableModule } from '@angular/material/table';
 
+import { ViewerComponent } from './viewer/viewer.component';
 import { HomeComponent } from './home/home.component';
 import { MoskisElementComponent } from './moskis-element/moskis-element.component';
 import { ItemCoreComponent } from './item-core/item-core.component';
@@ -60,21 +59,12 @@ import { ItemMysqlComponent } from './item-mysql/item-mysql.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+    AppRoutingModule, ReactiveFormsModule,
     BrowserAnimationsModule,
     MatSlideToggleModule, MatTooltipModule,
-    ReactiveFormsModule, MatTreeModule, MatIconModule,
+    MatTreeModule, MatIconModule,
+    MatTableModule,
     TestComponent, QuestionComponent, WaitingComponent,
-    IgxProgressBarModule
-    // NgCircleProgressModule.forRoot({
-    //   // set defaults here
-    //   radius: 100,
-    //   outerStrokeWidth: 16,
-    //   innerStrokeWidth: 8,
-    //   outerStrokeColor: "#78C000",
-    //   innerStrokeColor: "#C7E596",
-    //   animationDuration: 300
-    // })
   ]
 })
 export class AppModule {

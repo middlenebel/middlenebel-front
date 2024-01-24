@@ -1,9 +1,16 @@
 
 
-.action{
+.actions{
     list-style-type: none;
     border-bottom: solid 1px #8b8b8b;
     padding: 8px 0;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+}
+p{ margin: 0px;}
+.inputLabel{
+    width: fit-content;
 }
 .button {
     padding: 10px;

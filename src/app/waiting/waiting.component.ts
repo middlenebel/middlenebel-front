@@ -5,16 +5,12 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule} from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-// import { NgCircleProgressModule } from 'ng-circle-progress';
-import { IgxProgressBarModule } from 'igniteui-angular';
-// import { IGX_CIRCULAR_PROGRESS_BAR_DIRECTIVES } from 'igniteui-angular';
 
 @Component({
   selector: 'app-waiting',
   standalone: true,
   imports: [OverlayModule, CommonModule, MatFormFieldModule, MatInputModule,
-    MatButtonModule, FormsModule, IgxProgressBarModule
-    // NgCircleProgressModule
+    MatButtonModule, FormsModule, 
   ],
   template: `
   <span #myOrigin>

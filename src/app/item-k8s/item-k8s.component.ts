@@ -17,13 +17,21 @@ import { Util } from '../util';
           <!-- <p class="listing-name">{{data.name}}</p> -->
           <p class="listing-name">Api: {{data.versions}}</p>
       </div>
-      <div class="k8s-deployments">
-          <!-- <p class="k8s-deploy" *ngFor="let item of data.deployments"
-          matTooltip="{{item.attributes.get('image')}} in {{item.attributes.get('containerPort')}}"> -->
-          <p class="k8s-deploy" *ngFor="let item of data.deployments"  (click)="onWatch( item )"
-          matTooltip="{{getAtt(item.attributes, 'image')}} in {{getAtt(item.attributes, 'containerPort')}}">
-              {{getAtt(item.attributes, 'name')}}
-          </p>
+      <div class="listing-forWatch">
+        <div class="k8s-deployments">
+            <!-- <p class="k8s-deploy" *ngFor="let item of data.deployments"
+            matTooltip="{{item.attributes.get('image')}} in {{item.attributes.get('containerPort')}}"> -->
+            <p class="k8s-deploy" *ngFor="let item of data.deployments"  (click)="onWatch( item )"
+            matTooltip="Deploy {{getAtt(item.attributes, 'image')}} in {{getAtt(item.attributes, 'containerPort')}}">
+                {{getAtt(item.attributes, 'name')}}
+            </p>
+        </div>
+        <div class="k8s-services">
+            <p class="k8s-service" *ngFor="let item of data.services"  (click)="onWatch( item )"
+            matTooltip="Serice {{getAtt(item.attributes, 'name')}}">
+                {{getAtt(item.attributes, 'name')}}
+            </p>
+        </div>
       </div>
       <div class="watcher">
         <ng-template watcherHost>UNLOADED SYSTEM</ng-template>

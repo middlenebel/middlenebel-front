@@ -28,7 +28,7 @@ import { ElementItem } from '../element.item';
   selector: 'app-item-core',
   template: `
     <div class="element"> <!--(click)="onBar()">-->
-      <div class="core-buttons">
+      <div class="core-buttons-columm">
         <img class="core-buttons" src="assets/refresh-cw.svg"  matTooltip="Refresh" (click)="onReload()">
         <img class="core-buttons" src="assets/play.svg"  matTooltip="Deploy" (click)="onPlay()">
         <img class="core-buttons" src="assets/folder-svgrepo-com.svg"  matTooltip="Browser" (click)="showBrowser()">
@@ -248,7 +248,8 @@ export class ItemCoreComponent implements ElementComponent{
     const componentRef = viewContainerRef.createComponent(WatcherComponent);
     this.watchComponent = componentRef;
     componentRef.instance.watchItem = item;
-    componentRef.instance.attributes = new Map(item.attributes);
+    //componentRef.instance.attributes = new Map(item.attributes);
+    componentRef.instance.attributes = item.attributes;
     componentRef.instance.core = this;
   }
 
