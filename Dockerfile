@@ -13,13 +13,14 @@ COPY . .
 RUN npm install
 
 # Compile the Angular application
-RUN npm run build –prod
+RUN npm run build -prod
 
 # Use nginx server to deliver the application
 FROM nginx:alpine
 
 # Transfer the output of the build step
-COPY –from=builder /app/dist/my-angular-app/ /usr/share/nginx/html
+# COPY –from=builder /app/dist/my-angular-app/ /usr/share/nginx/html
+COPY --from=builder /app/dist/moskis-0/ /usr/share/nginx/html/
 
 # Replace the default nginx configuration with the one provided by tiangolo/node-frontend
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
