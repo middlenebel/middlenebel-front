@@ -35,8 +35,17 @@ export class LoggerComponent {
   onLoad(){
     console.log("Logger.onLoad");
     this.coreService.doGetLog().then((response: ActionInterface) => {
-      console.log("LOGGER reloaded "+ response.result ); //DEBUG +" "+response.message);
-      this.logContent = response.message;
+      if (response.result=="OK"){
+        console.log("LOGGER reloaded "+ response.result ); //DEBUG +" "+response.message);
+        this.logContent = response.message;
+      }else if (response.result=="SERVER-OUT"){
+          this.logContent = "Server not connected!\n\n Middlenebel - Front.\t Version a.0.2.\n\n "+
+          " Middlenebel is and IaC (Infrastructure as Code) for desktop environments.\n\n"+
+          " Enjoy deploying servers in your local DockerDesktop and Kubernetes.";
+
+      }else{
+        this.logContent = response.message;
+      }
       const textArea = this._textArea?.nativeElement as HTMLTextAreaElement;
       textArea.value = this.logContent;
       textArea?.focus();
