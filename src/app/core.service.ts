@@ -64,7 +64,7 @@ export class CoreService {
     } catch(e) {
       console.log(e); 
     }
-    return {result:"KO", message:"Unknown error"};
+    return {result:"SERVER-OUT", message:"Unknown error"};
   }
   async doClearLog(): Promise<ActionInterface> {
     try{
