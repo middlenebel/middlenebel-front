@@ -9,13 +9,13 @@ import { ExecuteActionInterface } from './executeActionInterface';
   providedIn: 'root'
 })
 export class CoreService {
-  urlReload = 'http://localhost:8080/reload';  
-  urlPlay = 'http://localhost:8080/play';
-  urlGetLog = 'http://localhost:8080/getLog';
-  urlClearLog = 'http://localhost:8080/clearLog';
-  urlDestroy = 'http://localhost:8080/destroy';
-  urlQuit = 'http://localhost:8080/quit';
-  urlExecuteAction = 'http://localhost:8080/executeAction';
+  urlReload = 'http://localhost:8081/reload';  
+  urlPlay = 'http://localhost:8081/play';
+  urlGetLog = 'http://localhost:8081/getLog';
+  urlClearLog = 'http://localhost:8081/clearLog';
+  urlDestroy = 'http://localhost:8081/destroy';
+  urlQuit = 'http://localhost:8081/quit';
+  urlExecuteAction = 'http://localhost:8081/executeAction';
   urlComponents: any;
    
   constructor(){ };

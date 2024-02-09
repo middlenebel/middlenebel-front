@@ -8,9 +8,9 @@ import { Util } from './util';
   providedIn: 'root'
 })
 export class ElementService {
-  urlStatus = 'http://localhost:8080/status';
-  urlComponents = 'http://localhost:8080/components';
-  urlSaveScript = 'http://localhost:8080/save-script';
+  urlStatus = 'http://localhost:8081/status';
+  urlComponents = 'http://localhost:8081/components';
+  urlSaveScript = 'http://localhost:8081/save-script';
    
   constructor(){ };
 

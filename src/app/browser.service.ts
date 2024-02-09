@@ -10,8 +10,8 @@ import { AppComponent } from './app.component';
   providedIn: 'root'
 })
 export class BrowserService {
-  urlReload = 'http://localhost:8080/browserReload';  
-  urlAction = 'http://localhost:8080/browserAction';
+  urlReload = 'http://localhost:8081/browserReload';  
+  urlAction = 'http://localhost:8081/browserAction';
 
   DEFAULT: TreeNode[] = [{"name":".","base":"/","children": []}];
    
