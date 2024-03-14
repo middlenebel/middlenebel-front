@@ -36,8 +36,10 @@ export class LoggerComponent {
     console.log("Logger.onLoad");
     this.coreService.doGetLog().then((response: ActionInterface) => {
       if (response.result=="OK"){
-        console.log("LOGGER reloaded "+ response.result ); //DEBUG +" "+response.message);
-        this.logContent = response.message;
+        console.log("LOGGER reloaded "+ response.result );
+        for (let line of response.message){
+          this.logContent +=  line + "\n";
+        }
       }else if (response.result=="SERVER-OUT"){
           this.logContent = "Server not connected!\n\n Middlenebel - Front.\t Version a.0.2.\n\n "+
           " Middlenebel is and IaC (Infrastructure as Code) for desktop environments.\n\n"+
