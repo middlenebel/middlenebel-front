@@ -101,6 +101,7 @@ export class ItemCoreComponent implements ElementComponent{
   waitingComponent : any;
   actionComponent : any;
   loggerComponent : any;
+  viewComponent : any;
   
   ngOnInit() : void {
     console.log("CORE " + this.data.className);
@@ -231,6 +232,13 @@ export class ItemCoreComponent implements ElementComponent{
     const componentRef = viewContainerRef.createComponent(ViewerComponent);
     componentRef.instance.script = Util.elements[this.index].script;
     componentRef.instance.core = this;
+    this.viewComponent = componentRef;
+  }
+  setScript(script: string){
+    Util.elements[this.index].script = script;
+    // this.viewComponent.instance.script = Util.elements[this.index].script;
+    this.loadViewer();
+    this.showViewer();
   }
   loadLogger() {
     console.log("CORE Log ");

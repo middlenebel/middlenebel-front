@@ -1,6 +1,7 @@
 
 .element {
-  background-color: violet;
+  /* background-color: violet; */
+  background-image: url('../../assets/background.svg');
   display: flex;
   flex-direction: row;
 }

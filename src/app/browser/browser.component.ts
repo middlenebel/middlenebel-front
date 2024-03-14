@@ -222,8 +222,14 @@ export class BrowserComponent {
           console.log("BROWSER ACION "+response.result);
           console.log("BROWSER MESSAGE "+response.message);  
           alert(response.message);
-        }else
-          this.core?.onReload();
+        }else{
+          if (this.action?.value?.endsWith(".nebel")){
+            this.core?.onReload();
+          }else{
+            console.log("BROWSER doLoadScript "+response.script!);
+            this.core?.setScript(response.script!);
+          }
+        }
       });
     }
   }
